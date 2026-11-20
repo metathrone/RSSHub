@@ -7,6 +7,7 @@ on:
 
 jobs:
     build:
+        if: github.repository == 'DIYgod/RSSHub'
         runs-on: ubuntu-latest
         name: Build assets
         timeout-minutes: 240

@@ -30,6 +30,7 @@ permissions:
 
 jobs:
     vitest:
+        if: github.repository == 'DIYgod/RSSHub'
         runs-on: ubuntu-latest
         timeout-minutes: 10
         services:
@@ -81,6 +82,7 @@ jobs:
                         fail-on-error: false
 
     playwright:
+        if: github.repository == 'DIYgod/RSSHub'
         runs-on: ubuntu-latest
         timeout-minutes: 10
         strategy:
@@ -126,6 +128,7 @@ jobs:
                   pnpm run vitest playwright
 
     all:
+        if: github.repository == 'DIYgod/RSSHub'
         runs-on: ubuntu-latest
         timeout-minutes: 5
         permissions:
@@ -153,6 +156,7 @@ jobs:
                   path: assets/build/
 
     automerge:
+        if: github.repository == 'DIYgod/RSSHub'
         if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
         needs: [vitest, playwright, all]
         runs-on: ubuntu-slim

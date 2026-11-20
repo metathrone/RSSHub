@@ -4,6 +4,7 @@ on: pull_request
 
 jobs:
     dependabot-fork:
+        if: github.repository == 'DIYgod/RSSHub'
         if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot[bot]'
         runs-on: ubuntu-slim
         name: Ignore dependabot on forks

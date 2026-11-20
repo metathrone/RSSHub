@@ -1,22 +1,28 @@
 name: Sync fork
 
 on:
-    schedule:
-        - cron: '17 4 * * *'
-    workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
-    sync-fork:
-        if: github.repository_owner != 'DIYgod'
-        runs-on: ubuntu-slim
-        name: Sync fork with DIYgod/RSSHub
-        timeout-minutes: 5
-        permissions:
-            contents: write
-        steps:
-            # The default token cannot update files under .github/workflows, so a sync that brings in workflow changes needs a SYNC_TOKEN secret with the workflow scope
-            - name: Sync default branch
-              env:
-                  GH_TOKEN: ${{ secrets.SYNC_TOKEN || github.token }}
-                  FORK_REPO: ${{ github.repository }}
-              run: gh repo sync "${FORK_REPO}"
+  sync:
+    if: github.repository == 'metathrone/RSSHub'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SYNC_TOKEN || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Sync upstream changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/DIYgod/RSSHub.git || git remote set-url upstream https://github.com/DIYgod/RSSHub.git
+          git fetch upstream master
+          git merge -X ours upstream/master -m "chore(sync): merge upstream changes"
+          git push origin master

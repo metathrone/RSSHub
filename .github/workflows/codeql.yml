@@ -33,6 +33,7 @@ concurrency:
 
 jobs:
     analyze:
+        if: github.repository == 'DIYgod/RSSHub'
         name: Analyze
         # Runner size impacts CodeQL analysis time. To learn more, please see:
         #   - https://gh.io/recommended-hardware-resources-for-running-codeql
@@ -98,6 +99,7 @@ jobs:
     # On master, CodeQL saves a ~340 MB overlay-base database to the Actions cache for every commit and never deletes one,
     # while pull requests only restore the newest. Keep the two newest so they do not fill the 10 GB cache.
     prune-overlay-cache:
+        if: github.repository == 'DIYgod/RSSHub'
         name: Prune old CodeQL databases
         needs: analyze
         if: github.event_name != 'pull_request'

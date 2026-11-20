@@ -11,6 +11,7 @@ on:
 
 jobs:
     build:
+        if: github.repository == 'DIYgod/RSSHub'
         # Not ubuntu-slim: its single CPU takes about twice as long to install and build, and it counts toward the same concurrent job limit
         runs-on: ubuntu-latest
         name: Build assets

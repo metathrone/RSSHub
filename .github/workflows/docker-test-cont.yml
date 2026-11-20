@@ -7,6 +7,7 @@ on:
 
 jobs:
     test-route:
+        if: github.repository == 'DIYgod/RSSHub'
         name: Route test
         runs-on: ubuntu-latest
         permissions:
@@ -173,6 +174,7 @@ jobs:
               run: docker logs rsshub || true # logs/combined.log? Not so readable...
 
     fail-build:
+        if: github.repository == 'DIYgod/RSSHub'
         name: Fail build
         runs-on: ubuntu-slim
         permissions:

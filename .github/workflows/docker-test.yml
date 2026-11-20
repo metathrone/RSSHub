@@ -20,6 +20,7 @@ concurrency:
 
 jobs:
     test:
+        if: github.repository == 'DIYgod/RSSHub'
         name: Docker build & tests
         permissions:
             pull-requests: write
