@@ -99,10 +99,9 @@ jobs:
     # On master, CodeQL saves a ~340 MB overlay-base database to the Actions cache for every commit and never deletes one,
     # while pull requests only restore the newest. Keep the two newest so they do not fill the 10 GB cache.
     prune-overlay-cache:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (github.event_name != 'pull_request')
         name: Prune old CodeQL databases
         needs: analyze
-        if: github.event_name != 'pull_request'
         runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:

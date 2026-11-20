@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
     test:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (failure())
         name: Docker build & tests
         permissions:
             pull-requests: write
@@ -57,7 +57,6 @@ jobs:
                   outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
 
             - name: Pull Request Labeler
-              if: ${{ failure() }}
               uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}

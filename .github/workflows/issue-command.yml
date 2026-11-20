@@ -6,9 +6,8 @@ on:
 
 jobs:
     rebase:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR')
         name: Automatic Rebase
-        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
         runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
@@ -25,9 +24,8 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     self-assign:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (!github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip'))
         name: Self Assign
-        if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
         runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
@@ -39,9 +37,8 @@ jobs:
                   trigger: '/wip'
 
     vouch-manage:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (startsWith(github.event.comment.body, 'vouch') || startsWith(github.event.comment.body, 'unvouch') || startsWith(github.event.comment.body, 'denounce'))
         name: Vouch Manage
-        if: ${{ startsWith(github.event.comment.body, 'vouch') || startsWith(github.event.comment.body, 'unvouch') || startsWith(github.event.comment.body, 'denounce') }}
         runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
@@ -83,9 +80,8 @@ jobs:
                       });
 
     test-on-demand:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (startsWith(github.event.comment.body, '/test'))
         name: Test route on demand
-        if: startsWith(github.event.comment.body, '/test')
         runs-on: ubuntu-latest
         timeout-minutes: 5
         permissions:

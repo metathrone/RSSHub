@@ -12,9 +12,8 @@ permissions:
 
 jobs:
     update-hash:
-        if: github.repository == 'DIYgod/RSSHub'
+        if: github.repository == 'DIYgod/RSSHub' && (github.repository_owner == 'DIYgod')
         # Only run on the upstream repo, not forks
-        if: github.repository_owner == 'DIYgod'
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:

@@ -13,8 +13,7 @@ on:
 
 jobs:
     review-pr:
-        if: github.repository == 'DIYgod/RSSHub'
-        if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+        if: github.repository == 'DIYgod/RSSHub' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
         runs-on: ubuntu-latest
         timeout-minutes: 10
         permissions:
